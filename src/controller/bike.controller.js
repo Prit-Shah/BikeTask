@@ -1,37 +1,81 @@
 const bikeService = require('../services/bike.service')
 
 async function addBike(bike, filename) {
-    return await bikeService.addBike(bike, filename);
+    try {
+        return await bikeService.addBike(bike, filename);
+    } catch (err) {
+        throw err;
+    }
 }
 async function editBike(id, bike) {
-    return await bikeService.editBike(id, bike);
+    try {
+        return await bikeService.editBike(id, bike);
+    } catch (err) {
+        throw err;
+    }
 }
 async function getAllBikes() {
-    return await bikeService.getAllBikes();
+    try {
+        return await bikeService.getAllBikes();
+    } catch (err) {
+        throw err;
+    }
 }
 async function deleteBike(id) {
-    return await bikeService.deleteBike(id);
+    try {
+        return await bikeService.deleteBike(id);
+    } catch (err) {
+        throw err;
+    }
 }
 async function getByType(id) {
-    return await bikeService.getByType(id);
+    try {
+        return await bikeService.getByType(id);
+    } catch (err) {
+        throw err;
+    }
 }
 async function getRecent(num) {
-    return await bikeService.getRecent(num);
+    try {
+        return await bikeService.getRecent(num);
+    } catch (err) {
+        throw err;
+    }
 }
 async function addLike(id, user) {
-    return await bikeService.addLike(id, user);
+    try {
+        return await bikeService.addLike(id, user);
+    } catch (err) {
+        throw err;
+    }
 }
 async function getMostLiked(num) {
-    return await bikeService.getMostLiked(num);
+    try {
+        return await bikeService.getMostLiked(num);
+    } catch (err) {
+        throw err;
+    }
 }
 async function addComment(id, user) {
-    return await bikeService.addComment(id, user);
+    try {
+        return await bikeService.addComment(id, user);
+    } catch (err) {
+        throw err;
+    }
 }
 async function getPhoto(name) {
-    return await bikeService.getPhoto(name);
+    try {
+        return await bikeService.getPhoto(name);
+    } catch (err) {
+        throw err
+    }
 }
 async function addDisLike(id, user) {
-    return await bikeService.addDisLike(id, user);
+    try {
+        return await bikeService.addDisLike(id, user);
+    } catch (err) {
+        throw err;
+    }
 }
 module.exports = {
     addBike,
