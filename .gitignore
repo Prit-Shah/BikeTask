@@ -1,4 +1,6 @@
 node_modules/
 .env
-! */public/uploads/bikes/defaultbike.jpg
-! */public/uploads/users/defaultuser.jpg
+public/uploads/bikes
+public/uploads/users
+! public/uploads/bikes/defaultbike.jpg
+! public/uploads/users/defaultuser.jpg
