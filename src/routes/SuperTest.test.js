@@ -60,7 +60,7 @@ describe('Bike Type GET Test', () => {
 describe('User GET Test', () => {
     it('User Photo', async () => {
         await request(BASE_URL)
-            .get('/user/file/photo-1674632957594.jpg')
+            .get('/user/file/defaultuser.jpg')
             .set('Authorization', `Bearer ${token}`)
             .expect(200)
     });
@@ -154,7 +154,7 @@ describe('Bike GET Test', () => {
 
     it('Get Bike Photo', async () => {
         await request(BASE_URL)
-            .get('/bike/file/photo-1674635037519.jpg')
+            .get('/bike/file/defaultbike.jpg')
             .set('Authorization', `Bearer ${token}`)
             .expect(200)
     });

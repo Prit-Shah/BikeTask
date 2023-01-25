@@ -7,13 +7,21 @@ const auth = require('../middleware/Auth.middleware')
 route.use(auth)
 
 route.post('/', EvAddType(), EvValidate, async (req, res) => {
-    const response = await BikeTypeController.addType(req.body);
-    return response.message ? res.status(409).send(response) : res.status(201).send(response);
+    try {
+        const response = await BikeTypeController.addType(req.body);
+        return response.message ? res.status(409).send(response) : res.status(201).send(response);
+    } catch (err) {
+        res.status(409).send({ Error: err.message })
+    }
 })
 
 route.get('/', async (req, res) => {
-    const data = await BikeTypeController.getTypes();
-    return data ? res.status(200).send(data) : res.send(401).send("No data");
+    try {
+        const data = await BikeTypeController.getTypes();
+        return data ? res.status(200).send(data) : res.send(401).send("No data");
+    } catch (err) {
+        res.status(409).send({ Error: err.message })
+    }
 })
 
 module.exports = route
