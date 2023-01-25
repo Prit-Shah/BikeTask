@@ -78,7 +78,6 @@ describe('Bike POST Test', () => {
             })
             .expect(201)
         newbikeid = response.body[0]._id;
-        console.log(newbikeid)
     });
 
     it('Add Like', async () => {
