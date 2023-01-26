@@ -33,6 +33,14 @@ route.patch('/:id', EvParamID(), EvEditBike(), EvValidate, async (req, res) => {
         res.status(409).send(err.message)
     }
 })
+route.get('/:id', EvParamID(), EvValidate, async (req, res) => {
+    try {
+        const response = await bikeController.getByID(req.params.id);
+        response.message ? res.status(409).json(response) : res.status(200).send(response);
+    } catch (err) {
+        res.status(409).send(err.message)
+    }
+})
 route.get('/', async (req, res) => {
     try {
         const data = await bikeController.getAllBikes();

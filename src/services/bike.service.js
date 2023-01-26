@@ -1,4 +1,3 @@
-const { ObjectID } = require('bson');
 const BikeModel = require('../mongoose/model/Bike.model');
 const bikeModel = require('../mongoose/model/Bike.model')
 
@@ -72,6 +71,15 @@ async function getByType(id) {
     }
 }
 
+async function getByID(id) {
+    try {
+        const data = await bikeModel.find({ _id: id }, '-__v');
+        return data ? data : null;
+    } catch (err) {
+        throw err;
+    }
+}
+
 async function getRecent(num) {
     try {
         const data = await bikeModel.find().sort({ 'regDate': -1 }).limit(num);
@@ -126,7 +134,7 @@ async function addDisLike(id, user) {
 async function getMostLiked(num) {
     try {
         // console.log((await bikeModel.find({ "likes": ObjectID(`63d13decbdfc3a06532ab14a`) }, { "likes": 1, "_id": 0 })).length);
-        const data = await bikeModel.find({}).sort({ "likes": -1 }).limit(num);
+        const data = await bikeModel.find().sort({ "likes": -1 }).limit(num);
         return data ? data : null;
     } catch (err) {
         throw err;
@@ -153,5 +161,6 @@ module.exports = {
     addDisLike,
     getMostLiked,
     addComment,
-    getPhoto
+    getPhoto,
+    getByID
 }

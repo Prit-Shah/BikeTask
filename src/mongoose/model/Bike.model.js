@@ -27,7 +27,7 @@ const BikeSchema = mongo.Schema({
                 ref: "users",
                 required: true,
             }
-        ]
+        ]        
     },
     dislikes: {
         type: [
