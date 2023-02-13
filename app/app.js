@@ -12,15 +12,19 @@ async function connect() {
         await connectmongo();
     }
     catch (err) {
-        console.log("\u001b[1;31m" + err.message);
+        console.log(`\u001b[1;31m${err.message}`);
     }
 }
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
 app.use(cors())
 app.use(express.static(path.join(__dirname, "../public")))
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+
+
 //File Upload
 app.set("view engine", "ejs");
+
 connect();
 app.use('/user', userroute);
 app.use('/biketype', biketyperoute);

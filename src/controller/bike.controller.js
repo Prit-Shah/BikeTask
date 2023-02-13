@@ -14,6 +14,14 @@ async function editBike(id, bike) {
         throw err;
     }
 }
+async function getByID(id) {
+    try {
+        return await bikeService.getByID(id);
+    }
+    catch (err) {
+        throw err;
+    }
+}
 async function getAllBikes() {
     try {
         return await bikeService.getAllBikes();
@@ -88,5 +96,6 @@ module.exports = {
     getMostLiked,
     addComment,
     getPhoto,
-    addDisLike
+    addDisLike,
+    getByID
 }

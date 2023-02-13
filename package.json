@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start":"ENV_TYPE=dev node server.js",
     "start:dev": "ENV_TYPE=dev nodemon server.js",
     "start:test":"ENV_TYPE=test nodemon server.js",
     "test":"jest"

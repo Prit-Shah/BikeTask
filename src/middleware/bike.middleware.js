@@ -5,8 +5,7 @@ const {
 
 function EvAddBike() {
     return [
-        body('createdBy').isMongoId(),
-        body('name').isLength({ min: 1 }),
+        body('name').trim().isLength({ min: 1 }),
         body('typeID').isMongoId()
     ]
 }
@@ -19,7 +18,7 @@ function EvParamID() {
 
 function EvEditBike() {
     return [
-        body('name').isLength({ min: 1 }),
+        body('name').trim().isLength({ min: 1 }),
     ]
 }
 
@@ -29,21 +28,10 @@ function EvParamNum() {
     ]
 }
 
-function EvAddLike() {
-    return [
-        body('id').isMongoId(),
-    ]
-}
-function EvAddDisLike() {
-    return [
-        body('id').isMongoId(),
-    ]
-}
 
 function EvAddComment() {
     return [
-        body('id').isMongoId(),
-        body('comment').isLength({ min: 1 })
+        body('comment').trim().isLength({ min: 1 })
     ]
 }
 
@@ -52,7 +40,5 @@ module.exports = {
     EvParamID,
     EvEditBike,
     EvParamNum,
-    EvAddLike,
-    EvAddDisLike,
     EvAddComment
 }

@@ -18,6 +18,7 @@ beforeAll(async () => {
     token = response.body.token;
     userid = response.body._id;
 });
+
 describe('User POST Test', () => {
     test('Create User', async () => {
         const response = await request(BASE_URL)

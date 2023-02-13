@@ -5,8 +5,6 @@ const { EvAddBike,
     EvParamID,
     EvEditBike,
     EvParamNum,
-    EvAddLike,
-    EvAddDisLike,
     EvAddComment } = require('../middleware/bike.middleware')
 const path = require('path')
 const { EvValidate } = require('../middleware/EvValidate.middleware')
@@ -15,9 +13,8 @@ const upload = require('../services/fileupload.service')
 route.use(auth);
 route.post('/', upload, EvAddBike(), EvValidate, async (req, res) => {
     try {
-        const response = await bikeController.addBike(req.body, req.file ? req.file.filename : "defaultbike.jpg");
+        const response = await bikeController.addBike(req, req.file ? req.file.filename : "defaultbike.jpg");
         response.message ? res.status(409).send(response) : res.status(201).send(response);
-
     } catch (err) {
         res.status(409).send(err.message)
     }
@@ -29,6 +26,14 @@ route.patch('/:id', EvParamID(), EvEditBike(), EvValidate, async (req, res) => {
     try {
         const response = await bikeController.editBike(req.params.id, req.body);
         response.message ? res.status(409).json(response) : res.status(204).json(response);
+    } catch (err) {
+        res.status(409).send(err.message)
+    }
+})
+route.get('/:id', EvParamID(), EvValidate, async (req, res) => {
+    try {
+        const response = await bikeController.getByID(req.params.id);
+        response.message ? res.status(409).json(response) : res.status(200).send(response);
     } catch (err) {
         res.status(409).send(err.message)
     }
@@ -65,9 +70,9 @@ route.get('/recent/:num', EvParamNum(), EvValidate, async (req, res) => {
         res.status(409).send({ Error: err.message })
     }
 })
-route.post('/like/:id', EvParamID(), EvAddLike(), EvValidate, async (req, res) => {
+route.post('/like/:id', EvParamID(), EvValidate, async (req, res) => {
     try {
-        const data = await bikeController.addLike(req.params.id, req.body);
+        const data = await bikeController.addLike(req.params.id, req);
         data ? res.status(201).send(data) : res.status(401).send("Already Liked")
     } catch (err) {
         res.status(409).send({ Error: err.message })
@@ -83,7 +88,7 @@ route.get('/mostLiked/:num', EvParamNum(), EvValidate, async (req, res) => {
 })
 route.post('/comment/:id', EvParamID(), EvAddComment(), EvValidate, async (req, res) => {
     try {
-        const data = await bikeController.addComment(req.params.id, req.body);
+        const data = await bikeController.addComment(req.params.id, req);
         data ? res.status(201).send(data) : res.status(401).send("Something went wrong");
     } catch (err) {
         res.status(409).send({ Error: err.message })
@@ -97,9 +102,9 @@ route.get('/file/:name', async (req, res) => {
         res.status(409).send({ Error: err.message })
     }
 })
-route.post('/dislike/:id', EvParamID(), EvAddDisLike(), EvValidate, async (req, res) => {
+route.post('/dislike/:id', EvParamID(), EvValidate, async (req, res) => {
     try {
-        const data = await bikeController.addDisLike(req.params.id, req.body);
+        const data = await bikeController.addDisLike(req.params.id, req);
         data.message ? res.status(409).send(data) : res.status(201).send(data)
     } catch (err) {
         res.status(409).send({ Error: err.message })
