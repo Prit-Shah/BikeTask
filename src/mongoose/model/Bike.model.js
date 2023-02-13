@@ -4,11 +4,12 @@ const BikeSchema = mongo.Schema({
     createdBy: {
         type: mongo.Types.ObjectId,
         ref: 'users',
-        required: true,
+        required: [true]
     },
     name: {
         type: String,
         required: true,
+        unique: true
     },
     typeID: {
         type: mongo.Types.ObjectId,
@@ -27,7 +28,7 @@ const BikeSchema = mongo.Schema({
                 ref: "users",
                 required: true,
             }
-        ]        
+        ]
     },
     dislikes: {
         type: [
@@ -57,5 +58,7 @@ const BikeSchema = mongo.Schema({
         default: 'defaultbike.jpg'
     },
 })
+BikeSchema.pre('save', () => {
 
+})
 module.exports = mongo.model('bikes', BikeSchema);

@@ -2,8 +2,7 @@ const { body } = require('express-validator')
 
 function EvAddType() {
     return [
-        body('name').isLength({ min: 1 }),
-        body('createdBy').isMongoId(),
+        body('name').trim().isLength({ min: 1 }),
     ]
 }
 

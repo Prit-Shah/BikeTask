@@ -9,8 +9,8 @@ async function addType(type) {
     }
     data = await BikeTypeModel.insertMany([
         {
-            name: type.name,
-            createdBy: type.createdBy,
+            name: type.body.name,
+            createdBy: type.user._id,
         }
     ])
     return data ? data : null;
@@ -21,7 +21,13 @@ async function getTypes() {
     return data ? data : null;
 }
 
+async function editType(oldName, newName) {
+    const data = await BikeTypeModel.updateOne({ name: oldName }, { $set: { name: newName } });
+    return data;
+}
+
 module.exports = {
     addType,
-    getTypes
+    getTypes,
+    editType
 }

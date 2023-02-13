@@ -11,17 +11,12 @@ async function getPhoto(name) {
 }
 async function addBike(bike, filename) {
     try {
-        const check = await BikeModel.findOne({ name: bike.name });
         let data = {};
-        if (check) {
-            data.message = "Bike name already exists";
-            return data;
-        }
         data = await bikeModel.insertMany([{
-            createdBy: bike.createdBy,
-            name: bike.name,
+            createdBy: bike.user._id,
+            name: bike.body.name,
             photo: filename,
-            typeID: bike.typeID,
+            typeID: bike.body.typeID,
         }])
         return data ? data : null;
     } catch (err) {
@@ -91,18 +86,18 @@ async function getRecent(num) {
 
 async function addLike(id, user) {
     try {
-        const likes = await bikeModel.findOne({ _id: id, "likes": user.id })
+        const likes = await bikeModel.findOne({ _id: id, "likes": user.user._id })
         let data = {};
         if (likes) {
             data.message = "Already liked";
             return data;
         }
         else {
-            const isDislike = await bikeModel.findOne({ _id: id, "dislikes": user.id })
+            const isDislike = await bikeModel.findOne({ _id: id, "dislikes": user.user._id })
             if (isDislike) {
-                await bikeModel.findByIdAndUpdate(id, { $pull: { "dislikes": user.id } })
+                await bikeModel.findByIdAndUpdate(id, { $pull: { "dislikes": user.user._id } })
             }
-            data = await bikeModel.findByIdAndUpdate(id, { $push: { "likes": user.id } }, { returnOriginal: false })
+            data = await bikeModel.findByIdAndUpdate(id, { $push: { "likes": user.user._id } }, { returnOriginal: false })
         }
         return data ? data : null;
     } catch (err) {
@@ -112,18 +107,18 @@ async function addLike(id, user) {
 
 async function addDisLike(id, user) {
     try {
-        const disliked = await bikeModel.findOne({ _id: id, "dislikes": user.id })
+        const disliked = await bikeModel.findOne({ _id: id, "dislikes": user.user._id })
         let data = {};
         if (disliked) {
             data.message = "Already Disliked";
             return data;
         }
         else {
-            const isLiked = await bikeModel.findOne({ _id: id, "likes": user.id })
+            const isLiked = await bikeModel.findOne({ _id: id, "likes": user.user._id })
             if (isLiked) {
-                await bikeModel.findByIdAndUpdate(id, { $pull: { "likes": user.id } })
+                await bikeModel.findByIdAndUpdate(id, { $pull: { "likes": user.user._id } })
             }
-            data = await bikeModel.findByIdAndUpdate(id, { $push: { "dislikes": user.id } }, { returnOriginal: false })
+            data = await bikeModel.findByIdAndUpdate(id, { $push: { "dislikes": user.user._id } }, { returnOriginal: false })
         }
         return data ? data : null;
     } catch (err) {
@@ -134,7 +129,7 @@ async function addDisLike(id, user) {
 async function getMostLiked(num) {
     try {
         // console.log((await bikeModel.find({ "likes": ObjectID(`63d13decbdfc3a06532ab14a`) }, { "likes": 1, "_id": 0 })).length);
-        const data = await bikeModel.find().sort({ "likes": -1 }).limit(num);
+        const data = await bikeModel.find().sort({ "likes": -1 }).limit(num).populate("createdBy", "-password -__v").populate("typeID", "-__v");
         return data ? data : null;
     } catch (err) {
         throw err;
@@ -142,8 +137,9 @@ async function getMostLiked(num) {
 }
 
 async function addComment(id, user) {
+    _
     try {
-        const data = await bikeModel.findByIdAndUpdate(id, { $push: { "comments": { userID: user.id, comment: user.comment } } }, { returnOriginal: false })
+        const data = await bikeModel.findByIdAndUpdate(id, { $push: { "comments": { userID: user.user._id, comment: user.body.comment } } }, { returnOriginal: false })
         return data ? data : null;
     } catch (err) {
         throw err;

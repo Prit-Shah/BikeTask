@@ -1,5 +1,6 @@
 const UserModel = require("../mongoose/model/User.model");
 const jwt = require('jsonwebtoken');
+require('dotenv').config()
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '')

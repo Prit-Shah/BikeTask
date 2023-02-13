@@ -8,7 +8,7 @@ route.use(auth)
 
 route.post('/', EvAddType(), EvValidate, async (req, res) => {
     try {
-        const response = await BikeTypeController.addType(req.body);
+        const response = await BikeTypeController.addType(req);
         return response.message ? res.status(409).send(response) : res.status(201).send(response);
     } catch (err) {
         res.status(409).send({ Error: err.message })
@@ -18,6 +18,15 @@ route.post('/', EvAddType(), EvValidate, async (req, res) => {
 route.get('/', async (req, res) => {
     try {
         const data = await BikeTypeController.getTypes();
+        return data ? res.status(200).send(data) : res.send(401).send("No data");
+    } catch (err) {
+        res.status(409).send({ Error: err.message })
+    }
+})
+
+route.patch('/:name', async (req, res) => {
+    try {
+        const data = await BikeTypeController.editType(req.params.name, req.body.name);
         return data ? res.status(200).send(data) : res.send(401).send("No data");
     } catch (err) {
         res.status(409).send({ Error: err.message })

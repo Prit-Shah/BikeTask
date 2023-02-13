@@ -4,6 +4,7 @@ const BikeTypeSchema = mongo.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
     createdBy: {
         type: mongo.Types.ObjectId,

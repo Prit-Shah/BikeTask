@@ -24,11 +24,12 @@ route.post('/signup', upload, EvSignupCheck(), EvValidate, async (req, res) => {
     res.status(409).send({ message: error.message })
 })
 
-route.get('/login', EvLoginCheck(), EvValidate, async (req, res) => {
+route.post('/login', EvLoginCheck(), EvValidate, async (req, res) => {
     try {
         const available = await userController.loginUser(req.body);
-        if (available) { available.token = jwt.sign(available, process.env.JSONTOKEN, { expiresIn: 60 * 60 }); }
-        available ? res.status(200).send(available) : res.status(403).send("Invalid Email or Password");
+        const data = { token: '' };
+        if (available) { data.token = jwt.sign(available, process.env.JSONTOKEN, { expiresIn: 60 * 60 }) };
+        available ? res.status(200).send(data) : res.status(403).send("Invalid Email or Password");
     } catch (err) {
         res.status(409).send({ Error: err.message })
     }
