@@ -19,7 +19,7 @@ async function connect() {
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors({
-    origin: 'https://bike-task.onrender.com',
+    origin: '*',
 }))
 app.use(express.static(path.join(__dirname, "../public")))
 
