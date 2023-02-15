@@ -10,7 +10,7 @@ async function connectmongo() {
             await mongo.connect(`mongodb+srv://${config.Uname}:${config.Pass}@cluster0.rdssz3x.mongodb.net/BikeTask?retryWrites=true&w=majority`)
         else if (process.env.ENV_TYPE === 'test')
             await mongo.connect(`mongodb+srv://${config.Uname}:${config.Pass}@cluster0.rdssz3x.mongodb.net/BikeTaskTest?retryWrites=true&w=majority`)
-        else await mongo.connect(`mongodb+srv://${config.Uname}:${config.Pass}@cluster0.rdssz3x.mongodb.net/BikeTask?retryWrites=true&w=majority`)
+        else await mongo.connect(`mongodb+srv://dcsprit:ItYwlknxVupjiHbf@cluster0.rdssz3x.mongodb.net/BikeTask?retryWrites=true&w=majority`)
     } catch (err) {
         throw new Error("Can't connect to Mongo");
     }
