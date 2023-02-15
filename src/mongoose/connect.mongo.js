@@ -1,5 +1,4 @@
 const mongo = require('mongoose')
-require('dotenv').config()
 mongo.set('strictQuery', true);
 const config = {
     Uname: process.env.MONGO_UNAME,
