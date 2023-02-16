@@ -19,7 +19,7 @@ var unless = function(path, middleware) {
         }
     };
 };
-route.use(unless('/file/:name/'),auth);
+route.use(unless('/file/:name'),auth);
 route.post('/', upload, EvAddBike(), EvValidate, async (req, res) => {
     try {
         const response = await bikeController.addBike(req, req.file ? req.file.filename : "defaultbike.jpg");
