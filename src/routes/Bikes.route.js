@@ -10,6 +10,15 @@ const path = require('path')
 const { EvValidate } = require('../middleware/EvValidate.middleware')
 const bikeController = require('../controller/bike.controller');
 const upload = require('../services/fileupload.service')
+var unless = function(path, middleware) {
+    return function(req, res, next) {
+        if (path === req.path) {
+            return next();
+        } else {
+            return middleware(req, res, next);
+        }
+    };
+};
 route.use(unless('/file/:name/'),auth);
 route.post('/', upload, EvAddBike(), EvValidate, async (req, res) => {
     try {
