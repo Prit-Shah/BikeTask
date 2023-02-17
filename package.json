@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"ENV_TYPE=dev node server.js",
+    "start": "ENV_TYPE=dev node server.js",
     "start:dev": "ENV_TYPE=dev nodemon server.js",
-    "start:test":"ENV_TYPE=test nodemon server.js",
-    "test":"jest"
+    "start:test": "ENV_TYPE=test nodemon server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
+    "cloudinary": "^1.34.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
